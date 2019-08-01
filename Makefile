@@ -2,8 +2,8 @@ NAME = wolf3d
 
 SRC_PATH =		./src
 WIN_DIR =	/window/
-REND_DIR =	/render/
-EVENT_DIR =	/event/
+REND_DIR = /render/
+EVENT_DIR = /events/
 PHYS_DIR = /physics/
 PARSE_DIR = /parsing/
 ERROR_DIR = /error/
@@ -11,8 +11,12 @@ UTIL_DIR = /utils/
 SRC = $(SRC_PATH)$(WIN_DIR)window_manager.c\
 			$(SRC_PATH)$(ERROR_DIR)display.c\
 			$(SRC_PATH)$(UTIL_DIR)init_struct.c\
+			$(SRC_PATH)$(UTIL_DIR)setup.c\
 			$(SRC_PATH)$(PARSE_DIR)command.c\
 			$(SRC_PATH)$(PARSE_DIR)set_map.c\
+			$(SRC_PATH)$(REND_DIR)draw_texture.c\
+			$(SRC_PATH)$(EVENT_DIR)handle_events.c\
+			$(SRC_PATH)$(PHYS_DIR)raycasting.c\
 			$(SRC_PATH)main.c
 
 BIN_PATH =		./bin

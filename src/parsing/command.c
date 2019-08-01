@@ -13,24 +13,47 @@
 
 
 #include "wolf.h"
+#include <stdio.h>
+
+static void check_map(char *name, int type)
+{
+  int  len;
+
+  len = ft_strlen(name);
+  name = ft_strsub(name, len - 4, len);
+  if (ft_strcmp(name, ".map") != 0)
+    clean_msg_exit(name, type^= IMG);
+}
+
+static void check_img(char *name, int type)
+{
+  int len;
+
+  len = ft_strlen(name);
+  name = ft_strsub(name, len - 4, len);
+  if (ft_strcmp(name, ".jpg") != 0 && ft_strcmp(name, ".png") != 0 && ft_strcmp(name, ".bmp") != 0)
+    clean_msg_exit(name, type^= MAP);
+}
 
 void check_extension(char **av, int type)
 {
   char *name;
-  int  len;
 
   name = NULL;
   if (!(type & MAP) && !(type & IMG))
     clean_msg_exit(NULL, UNDEFINED);
   if (type & MAP)
   {
-    len = ft_strlen(av[1]);
-    name = ft_strsub(av[1], len - 4, len);
-    if (ft_strcmp(name, ".map") != 0)
-      clean_msg_exit(name, type);
+    if (!av[1])
+      put_error("invalid map argument\n");
+    check_map(av[1], type);
   }
   if (type & IMG)
   {
-    // -i img_path /images/name.[bmp, jpeg..]
+    if (!av[2] || !av[3])
+      put_error("invalid image argument\n");
+    if (ft_strcmp(av[2], "-i") != 0)
+      put_error("invalid image argument\n");
+    check_img(av[3], type);
   }
 }

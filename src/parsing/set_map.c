@@ -66,7 +66,6 @@ static int check_coord(t_map *map, char *line, int line_pos)
     }
     i++;
   }
-  printf("count_cord:%d\n", count_coord);
   return (count_coord > 0 && count_coord == map->size.x);
 }
 
@@ -90,7 +89,10 @@ static void create_map(t_map *map, int line, int col)
   if (!(map->content = malloc(sizeof(int *) * line)))
     put_error("Memory allocation failed !\n");
   while (i < line)
-    map->content[i++] = malloc(sizeof(int) * col);
+  {
+    map->content[i] = malloc(sizeof(int) * col);
+    i++;
+  }
 }
 
 void read_map(t_map map, char *file)
@@ -116,12 +118,12 @@ void read_map(t_map map, char *file)
     // stock en meme temps que l'on valide.
     if (!set_line(&map, line, MAP_COORD, count_line))
     {
-      printf("map_x:%d | map_y:%d\n", map.size.x, map.size.y);
-      printf("line_count %d\n", count_line);
+      //printf("map_x:%d | map_y:%d\n", map.size.x, map.size.y);
+      //printf("line_count %d\n", count_line);
       put_error("No coordinates or too many coordinates\n");
       // free la map + line.
     }
-    printf("c_line : %d | len : %d | x : %d | y : %d\n", count_line, (int)ft_strlen(line), map.size.x, map.size.y);
+    //printf("c_line : %d | len : %d | x : %d | y : %d\n", count_line, (int)ft_strlen(line), map.size.x, map.size.y);
     //if (count_line > map.size.y || (int)ft_strlen(line) > map.size.x)
       //put_error("Invalid map size !\n");
     // si count line > map.size.y ou strlen(line) > map.size.x => NOP.

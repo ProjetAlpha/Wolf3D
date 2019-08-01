@@ -35,3 +35,19 @@ t_map init_map(void)
   map.size.y = 0;
   return (map);
 }
+
+t_config init_config(void)
+{
+  t_config config;
+
+  config.have_img = 0;
+  config.img_path = NULL;
+  config.projection.w = 0;
+  config.projection.h = 0;
+  config.ray_angle = 0;
+  config.cell_size.w = 0;
+  config.cell_size.h = 0;
+  config.camera.x = 0;
+  config.camera.y = 0;
+  return (config);
+}

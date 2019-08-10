@@ -95,7 +95,7 @@ static void create_map(t_map *map, int line, int col)
   }
 }
 
-void read_map(t_map map, char *file)
+void read_map(t_map *map, char *file)
 {
   char *line;
   int ret;
@@ -107,16 +107,16 @@ void read_map(t_map map, char *file)
     put_error("Fd error\n");
   count_line = 0;
   ret = get_next_line(fd, &line);
-  if (!ret || !set_line(&map, line, MAP_SIZE, 0))
+  if (!ret || !set_line(map, line, MAP_SIZE, 0))
   {
     put_error("Not a valid map size !");
     free(line);
   }
-  create_map(&map, map.size.y, map.size.x);
+  create_map(map, map->size.y, map->size.x);
   while (get_next_line(fd, &line))
   {
     // stock en meme temps que l'on valide.
-    if (!set_line(&map, line, MAP_COORD, count_line))
+    if (!set_line(map, line, MAP_COORD, count_line))
     {
       //printf("map_x:%d | map_y:%d\n", map.size.x, map.size.y);
       //printf("line_count %d\n", count_line);

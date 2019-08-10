@@ -21,7 +21,7 @@
 # include "../libft/libft.h"
 # include <stdlib.h>
 
-# define WIN_HEIGHT 1900
+# define WIN_HEIGHT 1600
 # define WIN_WIDTH 1200
 
 # define MAP 1 << 0
@@ -39,6 +39,9 @@
 # define NO_EVENT 1 << 0
 # define QUIT 1 << 1
 # define RESIZE 1 << 2
+
+# define MIN(a,b) (((a)<(b))?(a):(b))
+# define MAX(a,b) (((a)>(b))?(a):(b))
 
 typedef struct  s_window
 {
@@ -65,7 +68,7 @@ typedef struct s_config
   int     have_img;
   char    *img_path;
   t_dim   projection;
-  int     ray_angle;
+  float   ray_angle;
   t_vec2  camera;
   t_dim   cell_size;
 }             t_config;
@@ -104,9 +107,11 @@ void put_error(char *str);
 t_window init_win(void);
 t_map init_map(void);
 t_config init_config(void);
-void read_map(t_map map, char *file);
+void read_map(t_map *map, char *file);
 void init_sdl();
 void load_img_texture(SDL_Window *window, char *file, SDL_Rect *pos, int img_format);
 int get_events(void);
 void compute_config(t_config *config, t_map *map);
+void create_world(t_map map, t_config config, t_vec2 pos, SDL_Renderer *renderer);
+
 #endif

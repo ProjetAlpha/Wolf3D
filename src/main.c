@@ -44,7 +44,7 @@ int main(int ac, char **av)
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-        create_world(map, config, (t_vec2){.x = WIN_WIDTH / 2,.y = WIN_HEIGHT / 2}, renderer);
+        create_world(map, config, (t_vec2){.x = 0,.y = 0}, renderer);
         SDL_RenderPresent(renderer);
         is_draw = 1;
       }

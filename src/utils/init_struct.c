@@ -49,5 +49,7 @@ t_config init_config(void)
   config.cell_size.h = 0;
   config.camera.x = 0;
   config.camera.y = 0;
+  config.pos.x = 0;
+  config.pos.y = 0;
   return (config);
 }

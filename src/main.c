@@ -35,6 +35,36 @@ int main(int ac, char **av)
       event = get_events();
       if (event & QUIT)
         break;
+      if (event & ARROW_UP && config.pos.y + (WIN_HEIGHT / 30) <= WIN_HEIGHT)
+      {
+        config.pos.y += WIN_HEIGHT / 30;
+        is_draw = 0;
+      }
+      if (event & ARROW_DOWN && config.pos.y - (WIN_HEIGHT / 30) > 0)
+      {
+        config.pos.y -= WIN_HEIGHT / 30;
+        is_draw = 0;
+      }
+      if (event & ARROW_LEFT && config.pos.x - (WIN_WIDTH / 30) > 0)
+      {
+        config.pos.x -= WIN_WIDTH / 30;
+        is_draw = 0;
+      }
+      if (event & ARROW_RIGHT && config.pos.x + (WIN_WIDTH / 30) <= WIN_WIDTH)
+      {
+        config.pos.x += WIN_WIDTH / 30;
+        is_draw = 0;
+      }
+      if (event & D)
+      {
+        config.rotation += 45;
+        is_draw = 0;
+      }
+      if (event & A)
+      {
+        config.rotation -= 45;
+        is_draw = 0;
+      }
       // test image command [creer un carre avec l'image, sinon fill rect avec des couleurs ou image par defaut ?].
       // taille image = WIN_WIDTH / nb de colonne | WIN_HEIGHT / nb_line
       //if (config.have_img && config.img_path != NULL)
@@ -43,7 +73,10 @@ int main(int ac, char **av)
       {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
-        create_world(map, config, (t_vec2){.x = WIN_WIDTH / 2,.y = 0}, renderer);
+        config.rotation %= 360;
+        //config.pos.x %= WIN_WIDTH;
+        //config.pos.y %= WIN_HEIGHT;
+        create_world(map, config, config.pos, renderer);
         SDL_RenderPresent(renderer);
         is_draw = 1;
       }

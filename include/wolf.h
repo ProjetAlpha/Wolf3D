@@ -40,6 +40,16 @@
 # define QUIT 1 << 1
 # define RESIZE 1 << 2
 
+# define ARROW_DOWN 1 << 3
+# define ARROW_UP 1 << 4
+# define ARROW_RIGHT 1 << 5
+# define ARROW_LEFT 1 << 6
+
+# define W 1 << 7
+# define A 1 << 8
+# define S 1 << 9
+# define D 1 << 10
+
 # define MIN(a,b) (((a)<(b))?(a):(b))
 # define MAX(a,b) (((a)>(b))?(a):(b))
 
@@ -71,6 +81,8 @@ typedef struct s_config
   float   ray_angle;
   t_vec2  camera;
   t_dim   cell_size;
+  t_vec2  pos;
+  int     rotation;
 }             t_config;
 
 typedef struct  s_map

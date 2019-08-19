@@ -22,8 +22,27 @@ int get_events(void)
     }
     else if (e.type == SDL_QUIT)
       return (QUIT);
-    else if (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)
-      return (QUIT);
+    if (e.type == SDL_KEYUP)
+    {
+      if (e.key.keysym.sym == SDLK_ESCAPE)
+        return (QUIT);
+      if (e.key.keysym.sym == SDLK_DOWN)
+        return (ARROW_DOWN);
+      if (e.key.keysym.sym == SDLK_UP)
+        return (ARROW_UP);
+      if (e.key.keysym.sym == SDLK_LEFT)
+        return (ARROW_LEFT);
+      if (e.key.keysym.sym == SDLK_RIGHT)
+        return (ARROW_RIGHT);
+      if(e.key.keysym.sym == SDLK_w)
+        return (W);
+      if(e.key.keysym.sym == SDLK_a)
+        return (A);
+      if(e.key.keysym.sym == SDLK_s)
+        return (S);
+      if(e.key.keysym.sym == SDLK_d)
+        return (D);
+    }
   }
   return (NO_EVENT);
 }

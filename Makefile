@@ -12,6 +12,8 @@ SRC = $(SRC_PATH)$(WIN_DIR)window_manager.c\
 			$(SRC_PATH)$(ERROR_DIR)display.c\
 			$(SRC_PATH)$(UTIL_DIR)init_struct.c\
 			$(SRC_PATH)$(UTIL_DIR)setup.c\
+			$(SRC_PATH)$(UTIL_DIR)bits_op.c\
+			$(SRC_PATH)$(UTIL_DIR)wall_info_parsing.c\
 			$(SRC_PATH)$(PARSE_DIR)command.c\
 			$(SRC_PATH)$(PARSE_DIR)set_map.c\
 			$(SRC_PATH)$(REND_DIR)draw_texture.c\

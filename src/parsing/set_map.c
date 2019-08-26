@@ -52,6 +52,7 @@ static int check_coord(t_map *map, char *line, int line_pos)
 {
   int i;
   int count_coord;
+  short int tab[8];
 
   count_coord = 0;
   i = 0;
@@ -61,6 +62,11 @@ static int check_coord(t_map *map, char *line, int line_pos)
       put_error("Line coordinates exceed");
     if ((line[i] == '0' || line[i] == '1'))
     {
+      if (line[i] == '1')
+      {
+        set_pos(map, tab, count_coord, line_pos);
+        cpy_coords(map, tab);
+      }
       map->content[line_pos][count_coord] = (line[i] == '1') ? 1 : 0;
       count_coord++;
     }
@@ -109,25 +115,17 @@ void read_map(t_map *map, char *file)
   ret = get_next_line(fd, &line);
   if (!ret || !set_line(map, line, MAP_SIZE, 0))
   {
-    put_error("Not a valid map size !");
+    put_error("Not a valid map size !\n");
     free(line);
   }
   create_map(map, map->size.y, map->size.x);
   while (get_next_line(fd, &line))
   {
-    // stock en meme temps que l'on valide.
     if (!set_line(map, line, MAP_COORD, count_line))
-    {
-      //printf("map_x:%d | map_y:%d\n", map.size.x, map.size.y);
-      //printf("line_count %d\n", count_line);
       put_error("No coordinates or too many coordinates\n");
-      // free la map + line.
-    }
-    //printf("c_line : %d | len : %d | x : %d | y : %d\n", count_line, (int)ft_strlen(line), map.size.x, map.size.y);
-    //if (count_line > map.size.y || (int)ft_strlen(line) > map.size.x)
-      //put_error("Invalid map size !\n");
-    // si count line > map.size.y ou strlen(line) > map.size.x => NOP.
     count_line++;
     free(line);
   }
+  if (count_line != map->size.y)
+    put_error("Invalid number of lines !\n");
 }

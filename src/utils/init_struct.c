@@ -33,6 +33,7 @@ t_map init_map(void)
   map.content = NULL;
   map.size.x = 0;
   map.size.y = 0;
+  map.wall_info_size = 0;
   return (map);
 }
 
@@ -52,4 +53,13 @@ t_config init_config(void)
   config.pos.x = 0;
   config.pos.y = 0;
   return (config);
+}
+
+t_wall_info init_wall(void)
+{
+  t_wall_info wall;
+
+  wall.pos[0] = 0;
+  wall.pos[1] = 0;
+  return (wall);
 }

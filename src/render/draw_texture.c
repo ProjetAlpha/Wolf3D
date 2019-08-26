@@ -42,3 +42,24 @@ void load_img_texture(SDL_Window *window, char *file, SDL_Rect *pos, int img_for
     SDL_RenderCopy(renderer, texture, NULL, pos);
     SDL_RenderPresent(renderer);
 }
+
+void draw_vline(SDL_Renderer* renderer, t_line line)
+{
+  int length;
+  int inc;
+
+  inc = 0;
+  length = 0;
+  if (line.y1 == line.y2)
+    return ;
+  if (line.y1 > line.y2)
+    length = line.y1 - line.y2;
+  else
+    length = line.y2 - line.y1;
+  // opti : draw 10 pnts a chaque fois ?
+  while (length--)
+  {
+    SDL_RenderDrawPoints(renderer, &(SDL_Point){.x = line.x1, .y = line.y1 + inc}, 1);
+    inc++;
+  }
+}

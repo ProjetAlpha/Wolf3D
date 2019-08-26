@@ -35,34 +35,57 @@ int main(int ac, char **av)
       event = get_events();
       if (event & QUIT)
         break;
-      if (event & ARROW_UP && config.pos.y + (WIN_HEIGHT / 30) <= WIN_HEIGHT)
+      // deplacement = 1 carre =>
+      // x et y inverses qd on rotate (-rot).
+      if (event & ARROW_UP && config.pos.y + (config.cell_size.w * 0.5) <= WIN_HEIGHT)
       {
-        config.pos.y += WIN_HEIGHT / 30;
+        if (config.rotation < 0)
+          config.pos.x += config.cell_size.w * 0.5;
+        else
+          config.pos.y += config.cell_size.w * 0.5;
         is_draw = 0;
       }
-      if (event & ARROW_DOWN && config.pos.y - (WIN_HEIGHT / 30) > 0)
+      if (event & ARROW_DOWN && config.pos.y - (config.cell_size.w * 0.5) > 0)
       {
-        config.pos.y -= WIN_HEIGHT / 30;
+        if (config.rotation < 0)
+          config.pos.x -= config.cell_size.w * 0.5;
+        else
+          config.pos.y -= config.cell_size.w * 0.5;
+        is_draw = 0;
+      }else if (event & ARROW_DOWN && config.pos.y - (config.cell_size.w * 0.5) <= 0)
+      {
+        config.pos.y = 0;
         is_draw = 0;
       }
-      if (event & ARROW_LEFT && config.pos.x - (WIN_WIDTH / 30) > 0)
+
+      if (event & ARROW_LEFT)
       {
-        config.pos.x -= WIN_WIDTH / 30;
+        config.rotation -= 15;
         is_draw = 0;
       }
-      if (event & ARROW_RIGHT && config.pos.x + (WIN_WIDTH / 30) <= WIN_WIDTH)
+      if (event & ARROW_RIGHT)
       {
-        config.pos.x += WIN_WIDTH / 30;
+        config.rotation += 15;
         is_draw = 0;
       }
-      if (event & D)
+      if (event & D && config.pos.x + (config.cell_size.w * 0.5) <= WIN_WIDTH)
       {
-        config.rotation += 45;
+        if (config.rotation < 0)
+          config.pos.y -= config.cell_size.w * 0.5;
+        else
+          config.pos.x -= config.cell_size.w * 0.5;
         is_draw = 0;
       }
-      if (event & A)
+      if (event & A && (config.pos.x - (config.cell_size.w * 0.5) > 0 || (config.rotation < 0 && config.pos.y - (config.cell_size.w * 0.5) > 0)))
       {
-        config.rotation -= 45;
+        if (config.rotation < 0)
+          config.pos.y -= config.cell_size.w * 0.5;
+        else
+          config.pos.x -= config.cell_size.w * 0.5;
+        is_draw = 0;
+      }else if (event & A && config.pos.x - (config.cell_size.w * 0.5) <= 0)
+      {
+        config.pos.x = 0;
         is_draw = 0;
       }
       // test image command [creer un carre avec l'image, sinon fill rect avec des couleurs ou image par defaut ?].
@@ -74,8 +97,6 @@ int main(int ac, char **av)
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
         config.rotation %= 360;
-        //config.pos.x %= WIN_WIDTH;
-        //config.pos.y %= WIN_HEIGHT;
         create_world(map, config, config.pos, renderer);
         SDL_RenderPresent(renderer);
         is_draw = 1;

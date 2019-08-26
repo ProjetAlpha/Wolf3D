@@ -19,9 +19,9 @@ void compute_config(t_config *config, t_map *map)
   config->projection.h = WIN_HEIGHT;
   config->cell_size.w = (int)(WIN_WIDTH / map->size.x);
   config->cell_size.h = (int)(WIN_HEIGHT / map->size.y);
-  config->ray_angle = (60.0 / (double)WIN_WIDTH);
-  config->pos.x = WIN_WIDTH / 2;
-  config->pos.y = 0;
+  config->ray_angle = (66.0 / (double)WIN_WIDTH);
+  config->pos.x = config->cell_size.w / 2;
+  config->pos.y = config->cell_size.w / 2;
   config->rotation = 0;
   // matrice de rotation quand le player bouge.
   config->camera.x = WIN_WIDTH / 2;

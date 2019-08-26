@@ -22,7 +22,7 @@ int get_events(void)
     }
     else if (e.type == SDL_QUIT)
       return (QUIT);
-    if (e.type == SDL_KEYUP)
+    if (e.type == SDL_KEYDOWN)
     {
       if (e.key.keysym.sym == SDLK_ESCAPE)
         return (QUIT);

@@ -72,6 +72,19 @@ typedef struct  s_dim
   int h;
 }               t_dim;
 
+typedef struct  s_line
+{
+  int x1;
+  int y1;
+  int x2;
+  int y2;
+}               t_line;
+
+typedef struct s_rect_pos
+{
+  int x1;
+  int y1;
+}             t_rect_pos;
 
 typedef struct s_config
 {
@@ -85,31 +98,18 @@ typedef struct s_config
   int     rotation;
 }             t_config;
 
+typedef struct  s_wall_info
+{
+  unsigned long int pos[2];
+}               t_wall_info;
+
 typedef struct  s_map
 {
   int **content;
   t_vec2 size;
+  t_wall_info *wall_info;
+  int wall_info_size;
 }               t_map;
-
-// 1 = carre = 4 faces
-// screnW = Window width.
-// tan 30 car (FOV / 2)
-// distance p->wall = (screnW / 2) / tan(30) = x | 1 col = 60 / screnW
-// increment l'angle de 60/screnW
-// xa = grid height / tan (grid height / xa)
-// vertical => offset = x % Width | horizontal => offset = y % Width.
-// w = 1900px, grid de 5 => 1900 / 5 = 380px
-// h = 1200px, grid de 5 => 1200 / 5 = 240px
-// => dim 1 unit = 380 de width, 280 de height.
-typedef struct  s_wall
-{
-
-}               t_wall;
-
-/*typedef struct s_wolf
-{
-  t_window window;
-} t_wolf;*/
 
 void create_window(t_window *window, const char* title, SDL_Rect rect, Uint32 flags);
 void clear_window(t_window *window);
@@ -119,11 +119,17 @@ void put_error(char *str);
 t_window init_win(void);
 t_map init_map(void);
 t_config init_config(void);
+t_wall_info init_wall(void);
 void read_map(t_map *map, char *file);
 void init_sdl();
 void load_img_texture(SDL_Window *window, char *file, SDL_Rect *pos, int img_format);
 int get_events(void);
 void compute_config(t_config *config, t_map *map);
 void create_world(t_map map, t_config config, t_vec2 pos, SDL_Renderer *renderer);
+void draw_vline(SDL_Renderer* renderer, t_line line);
+unsigned long set_bits(short int pos_1, short int pos_2, short int pos_3, short int pos_4);
+void get_bits(unsigned long stack, int tab[4]);
+void set_pos(t_map *map, short int tab[8], int count_cord, int line_pos);
+t_wall_info *cpy_coords(t_map *map, short int pos[8]);
 
 #endif

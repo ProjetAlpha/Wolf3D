@@ -13,7 +13,7 @@
 
 
 #include "wolf.h"
-
+#include <stdio.h>
 
 
 /*  En fonction de l'extension (flag) charge une image a une postion donnée.
@@ -43,23 +43,62 @@ void load_img_texture(SDL_Window *window, char *file, SDL_Rect *pos, int img_for
     SDL_RenderPresent(renderer);
 }
 
+void draw_10_by_10(int n, int x, int y, SDL_Renderer* renderer)
+{
+  int inc;
+
+  inc = 0;
+  while (n--)
+  {
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+  }
+}
+
+void draw_1_by_1(int n, int x, int y, SDL_Renderer* renderer)
+{
+  int inc;
+
+  inc = 0;
+  while (n--)
+    SDL_RenderDrawPoint(renderer,x,y + inc++);
+}
+
 void draw_vline(SDL_Renderer* renderer, t_line line)
 {
   int length;
   int inc;
+  double ret;
+  int units;
 
   inc = 0;
+  units = 0;
+  ret = 0.0;
   length = 0;
   if (line.y1 == line.y2)
     return ;
   if (line.y1 > line.y2)
-    length = line.y1 - line.y2;
+    length = (line.y1 - line.y2);
   else
-    length = line.y2 - line.y1;
-  // opti : draw 10 pnts a chaque fois ?
-  while (length--)
+    length = (line.y2 - line.y1);
+  ret = (double)length / 10.0;
+  units = (length - (int)ret * 10);
+  if (ret >= 1.0)
   {
-    SDL_RenderDrawPoints(renderer, &(SDL_Point){.x = line.x1, .y = line.y1 + inc}, 1);
-    inc++;
+    draw_10_by_10(ret, line.x1, line.y1, renderer);
+    if (units > 0)
+      draw_1_by_1(units, line.x1, line.y1 + (int)ret * 10, renderer);
   }
+  else if (units > 0)
+    draw_1_by_1(units, line.x1, line.y1, renderer);
+  /*while (length--)
+    SDL_RenderDrawPoint(renderer, line.x1, line.y1 + inc++);*/
 }

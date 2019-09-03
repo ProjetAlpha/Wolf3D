@@ -46,7 +46,7 @@ void set_pos(t_map *map, short int tab[8], int count_cord, int line_pos)
   int h;
 
   w = WIN_WIDTH / map->size.x;
-  h = WIN_HEIGHT / map->size.y;
+  h = WIN_WIDTH / map->size.y;
   y = h * line_pos;
   x = w * count_cord;
   tab[0] = x;

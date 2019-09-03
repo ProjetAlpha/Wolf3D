@@ -52,6 +52,8 @@ t_config init_config(void)
   config.camera.y = 0;
   config.pos.x = 0;
   config.pos.y = 0;
+  config.start_x = 0;
+  config.start_y = 0;
   return (config);
 }
 

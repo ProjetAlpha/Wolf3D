@@ -21,7 +21,7 @@
 # include "../libft/libft.h"
 # include <stdlib.h>
 
-# define WIN_HEIGHT 1600
+# define WIN_HEIGHT 1900
 # define WIN_WIDTH 1200
 
 # define MAP 1 << 0
@@ -68,8 +68,8 @@ typedef struct  s_vec2
 
 typedef struct  s_dim
 {
-  int w;
-  int h;
+  double w;
+  double h;
 }               t_dim;
 
 typedef struct  s_line
@@ -96,6 +96,8 @@ typedef struct s_config
   t_dim   cell_size;
   t_vec2  pos;
   int     rotation;
+  int     start_x;
+  int     start_y;
 }             t_config;
 
 typedef struct  s_wall_info

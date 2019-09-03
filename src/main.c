@@ -1,5 +1,5 @@
 #include "wolf.h"
-#include "stdio.h"
+#include <stdio.h>
 
 int main(int ac, char **av)
 {
@@ -9,6 +9,7 @@ int main(int ac, char **av)
   SDL_Renderer *renderer;
   t_config config;
   int is_draw;
+  int ray_angle;
 
   window = init_win();
   map = init_map();
@@ -35,22 +36,28 @@ int main(int ac, char **av)
       event = get_events();
       if (event & QUIT)
         break;
+      if (config.rotation > 0 || config.rotation < 0)
+        ray_angle = 45 + config.rotation;
+      else
+        ray_angle = 45;
       // deplacement = 1 carre =>
       // x et y inverses qd on rotate (-rot).
+      // a * cos(ray_angle + 30)
+      // a * sin(ray_angle + 30)
+      //
       if (event & ARROW_UP && config.pos.y + (config.cell_size.w * 0.5) <= WIN_HEIGHT)
       {
-        if (config.rotation < 0)
-          config.pos.x += config.cell_size.w * 0.5;
-        else
-          config.pos.y += config.cell_size.w * 0.5;
+        config.pos.x += fabs(10 * cos(ray_angle + 30));
+        config.pos.y += fabs(10 * sin(ray_angle + 30));
+        //config.pos.x += config.cell_size.w * 0.5;
+        //config.pos.y += config.cell_size.w * 0.5;
+        //printf("pos_x : %d | pos_y : %d\n", config.pos.x, config.pos.y);
         is_draw = 0;
       }
       if (event & ARROW_DOWN && config.pos.y - (config.cell_size.w * 0.5) > 0)
       {
-        if (config.rotation < 0)
-          config.pos.x -= config.cell_size.w * 0.5;
-        else
-          config.pos.y -= config.cell_size.w * 0.5;
+        config.pos.x -= fabs(10 * cos(ray_angle + 30));
+        config.pos.y -= fabs(10 * sin(ray_angle + 30));
         is_draw = 0;
       }else if (event & ARROW_DOWN && config.pos.y - (config.cell_size.w * 0.5) <= 0)
       {
@@ -60,12 +67,14 @@ int main(int ac, char **av)
 
       if (event & ARROW_LEFT)
       {
-        config.rotation -= 15;
+        config.rotation -= 5;
         is_draw = 0;
       }
       if (event & ARROW_RIGHT)
       {
-        config.rotation += 15;
+        // x = -(sin(angle) - py) + px
+        // y = (cos(angle) - px) + py
+        config.rotation += 5;
         is_draw = 0;
       }
       if (event & D && config.pos.x + (config.cell_size.w * 0.5) <= WIN_WIDTH)

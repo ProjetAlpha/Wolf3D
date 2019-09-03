@@ -43,7 +43,7 @@ $(NAME): $(BIN)
 		make -C $(LIBFT)
 		$(CC) $(CFLAGS) $(BIN) -o $(NAME) $(LIBRARIES)
 
-$(BIN_PATH)/%.o : $(SRC_PATH)/%.c
+$(BIN_PATH)/%.o : $(SRC_PATH)/%.c ./include/wolf.h
 		$(CC) $(CFLAGS) -c $< -o $@
 
 $(BIN_PATH)/$(SRC_PATH_1)/%.o : $(SRC_PATH)/$(SRC_PATH_1)/%.c

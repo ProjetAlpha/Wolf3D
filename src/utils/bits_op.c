@@ -30,8 +30,8 @@ unsigned long set_bits(short int pos_1, short int pos_2, short int pos_3, short 
 
 void get_bits(unsigned long stack, int tab[4])
 {
-  tab[0] = (stack & 0x0000FFFF);
-  tab[1] = (stack & 0xFFFF0000) >> 16;
-  tab[2] = (stack & 0x0000FFFF00000000) >> 32;
-  tab[3] = (stack & 0xFFFF00000000000) >> 48;
+  tab[0] = (stack & 0xFFFF00000000000) >> 48;
+  tab[1] = (stack & 0x0000FFFF00000000) >> 32;
+  tab[2] = (stack & 0xFFFF0000) >> 16;
+  tab[3] = (stack & 0x0000FFFF);
 }
